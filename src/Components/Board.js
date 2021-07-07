@@ -151,7 +151,11 @@ const Board = (props) => {
                 setStatus("You Won!");
                 for (let i = 0; i < row; i++) {
                     for (let j = 0; j < col; j++) {
+                        if (gridCopy[i][j].flagged && gridCopy[i][j].value === "X") {
+                            continue;
+                        }
                         gridCopy[i][j].revealed = true;
+
                     }
                 }
             }
@@ -159,7 +163,11 @@ const Board = (props) => {
                 setStatus("You Lost!")
                 for (let i = 0; i < row; i++) {
                     for (let j = 0; j < col; j++) {
+                        if (gridCopy[i][j].flagged && gridCopy[i][j].value === "X") {
+                            continue;
+                        }
                         gridCopy[i][j].revealed = true;
+
                     }
                 }
             }
@@ -236,15 +244,8 @@ const Board = (props) => {
 
     return (
         <div className="boardWrapper">
-            {status !== "Game in proggress" && (< div className="popup">
-                <div className="button" onClick={restartGame}>
-                    {status === "You Lost!" ? "Try again? " : "Play again?"}
-                </div>
-
-            </div>)}
-
-            {startGame && (< div className="popup">
-                <div className="button" onClick={startingGame}>
+            {startGame && (< div className="popupPlayGame">
+                <div className="buttonPlayGame" onClick={startingGame}>
                     Play game
                 </div>
 
@@ -262,7 +263,12 @@ const Board = (props) => {
                     ))
                 ))}
             </div>
+            {status !== "Game in proggress" && (< div className="popup">
+                <div className="button" onClick={restartGame}>
+                    {status === "You Lost!" ? "Try again? " : "Play again?"}
+                </div>
 
+            </div>)}
         </div >
     );
 };
